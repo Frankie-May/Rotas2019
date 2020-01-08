@@ -12,4 +12,9 @@ typedef struct city{
 	FLIGHT * next_flight;
 }CITY;
 
+
+CITY* add_city(CITY *init, char city_name[])
+
+void view_city(CITY* init)
+
 #endif /* city.h */
