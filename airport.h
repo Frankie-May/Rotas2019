@@ -35,6 +35,14 @@ AIRPORT* add_airport(AIRPORT* init, INFO_AIRPORT airport_data);
 
 void view_airports(AIRPORT* init);
 
+
+
+/*In File Read_Files.c*/
+
+AIRPORT* read_airport_file(AIRPORT *airports);
+
+/*In File Read_Files.c*/
+
 #endif /*airport.h*/
 
 
