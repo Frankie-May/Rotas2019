@@ -30,7 +30,7 @@ AIRPORT* add_airport(AIRPORT* init, INFO_AIRPORT airport_data)
 
 	AIRPORT* new, *before, *current;
 
-	new = (AIRPORT *)calloc(1,sizeof(AIRPORT));
+	new = (AIRPORT *)calloc(1, sizeof(AIRPORT));
 	if(new == NULL){
 		printf("Allocation Error! :-(");
 		exit(-1);
@@ -40,16 +40,19 @@ AIRPORT* add_airport(AIRPORT* init, INFO_AIRPORT airport_data)
 	new->next_city = NULL;
 	new->next = NULL;
 
-	if(init == NULL){
-		init = new;
-
-	}
 	current = init;
 	before = NULL;
-	while(current != NULL || (strcmp(current->airport_details.city, new->airport_details.city) > 0)){
+	while(current != NULL && (strcmp(current->airport_details.city, new->airport_details.city) < 0)){
 
 		before = current;
 		current = current->next;
+	}
+
+	if(current == init){
+		new->next = current;
+		init = new;
+		return init;
+
 	}
 
 	new->next = current;
@@ -71,9 +74,11 @@ void view_airports(AIRPORT* init)
 {
 
 	AIRPORT* aux;
+	
 	aux = init;
+
 	while(aux != NULL){
-		printf("%s %s %d %d %d %c %d %d %d %c %s %d", aux->airport_details.id_ICAO, aux->airport_details.id_IATA, aux->airport_details.latitude.degree, aux->airport_details.latitude.minutes, aux->airport_details.latitude.seconds, aux->airport_details.latitude.orientation, aux->airport_details.longitude.degree, aux->airport_details.longitude.minutes, aux->airport_details.longitude.seconds, aux->airport_details.longitude.orientation, aux->airport_details.city, aux->airport_details.time_zone); 
+		printf("%s %s %d %d %d %c %d %d %d %c %s %d\n", aux->airport_details.id_ICAO, aux->airport_details.id_IATA, aux->airport_details.latitude.degree, aux->airport_details.latitude.minutes, aux->airport_details.latitude.seconds, aux->airport_details.latitude.orientation, aux->airport_details.longitude.degree, aux->airport_details.longitude.minutes, aux->airport_details.longitude.seconds, aux->airport_details.longitude.orientation, aux->airport_details.city, aux->airport_details.time_zone); 
 		aux = aux->next;
 	}
 
