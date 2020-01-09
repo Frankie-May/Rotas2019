@@ -13,8 +13,14 @@ typedef struct city{
 }CITY;
 
 
-CITY* add_city(CITY *init, char city_name[])
+CITY* add_city(CITY *init, char city_name[]);
 
-void view_city(CITY* init)
+void view_city(CITY* init);
+
+/*In File flight.c*/
+
+void add_flight_to_airports(FLIGHT* init_flight, CITY* init_city, INFO_FLIGHT flight_data);
+
+/*In File flight.c*/
 
 #endif /* city.h */

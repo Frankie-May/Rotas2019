@@ -18,7 +18,7 @@ CITY* add_city(CITY *init, char city_name[])
 
 	new = (CITY*)calloc(1, sizeof(CITY));
 
-	new->city_name = city_name;
+	strcpy(new->city_name, city_name);
 	new->next = NULL;
 	new->next_flight = NULL;
 
@@ -46,8 +46,8 @@ CITY* add_city(CITY *init, char city_name[])
 }
 
 /*------------------------------------------------------------
-| Funcao: view_airports
-| Argumentos: init -> apontador para o inicio da lista de aeroportos;
+| Funcao: view_city
+| Argumentos: init -> apontador para o inicio da lista de cidades;
 | Return: Void.
 | Autor: Francisco May e Gustavo Duarte
 | Data: 2019/12/18
@@ -64,5 +64,34 @@ void view_city(CITY* init)
 	{
 		printf("%s\n", aux->city_name);
 		aux = aux->next;
+	}
+}
+
+/*------------------------------------------------------------
+| Funcao: add_city_to_airports
+| Argumentos: init -> apontador para o inicio da lista de cidades;
+| Return: Void.
+| Autor: Francisco May e Gustavo Duarte
+| Data: 2020/01/08
+| Versão: 0.0
+--------------------------------------------------------------*/
+
+void add_city_to_airports(AIRPORT* init)
+{
+	AIRPORT *current_airport, *current_city;
+
+	current_airport = init;
+	while(current_airport != NULL)
+	{
+		current_city = init;
+		while(current_city != NULL)
+		{
+			if(current_city->airport_details.city != current_airport->airport_details.city)
+			{
+				current_airport->next_city = add_city(current_airport->next_city, current_city->airport_details.city);
+			}
+			current_city = current_city->next;
+		}
+		current_airport = current_airport->next;
 	}
 }

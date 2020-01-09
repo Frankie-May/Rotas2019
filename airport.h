@@ -1,5 +1,6 @@
 #ifndef AIRPORT_H
 #define AIRPORT_H
+#define LN 1000
 
 #include "city.h"
 #include <stdio.h>
@@ -41,7 +42,16 @@ void view_airports(AIRPORT* init);
 
 AIRPORT* read_airport_file(AIRPORT *airports);
 
+void read_routes_file(AIRPORT *airports);
+
 /*In File Read_Files.c*/
+
+
+/*In File city.h*/
+
+void add_city_to_airports(AIRPORT* init);
+
+/*In File city.h*/
 
 #endif /*airport.h*/
 
