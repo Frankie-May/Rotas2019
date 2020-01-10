@@ -19,6 +19,7 @@ typedef struct {
 	char arrival[dimv_city];
 	TIME arrival_time;
 	char airline_name[dimv_airline];
+	float dist_bet_airports;
 }INFO_FLIGHT;
 
 typedef struct flight{
@@ -26,11 +27,29 @@ typedef struct flight{
 	struct flight *next_flight;
 } FLIGHT;
 
+typedef struct connect_flight{
+	FLIGHT first_flight;
+	FLIGHT second_flight;
+	float dist;
+	struct connect_flight *next;
+} CONNECT_FLIGHT;
+
+
 FLIGHT* add_flight(FLIGHT *init, INFO_FLIGHT flight_data);
+
+FLIGHT* add_flight_invert(FLIGHT *init, INFO_FLIGHT flight_data);
 
 void view_flight(FLIGHT* init);
 
 int time_comparison(TIME first_time,TIME second_time);
+
+CONNECT_FLIGHT* init_connect_flight();
+
+CONNECT_FLIGHT* add_connect_flight(CONNECT_FLIGHT* init, FLIGHT first_flight, FLIGHT second_flight, float dist);
+
+void view_connect_flight(CONNECT_FLIGHT* init);
+
+CONNECT_FLIGHT* remove_dummies(CONNECT_FLIGHT* init);
 
 
 #endif /* flight.h */

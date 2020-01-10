@@ -68,7 +68,7 @@ AIRPORT* read_airport_file(AIRPORT *airports)
 void read_routes_file(AIRPORT *airports)
 {
 	char* aux;
-	AIRPORT* aux_airports;
+	AIRPORT* aux_airports, *aux_dist_1, *aux_dist_2;
 	int verify_conv_1, verify_conv_2;
 	char line[LN], airline[dimv_airline];
 	INFO_FLIGHT flight_details;
@@ -102,27 +102,28 @@ void read_routes_file(AIRPORT *airports)
 			{	
 				fprintf(stdout, "ERROR:Conversion error in File %s! :-(\n", routes_file);
 			}
-			printf("........%s %s %d:%d %s %d:%d\n", flight_details.flight_code, flight_details.departure, flight_details.departure_time.hours, flight_details.departure_time.minutes, flight_details.arrival, flight_details.arrival_time.hours, flight_details.arrival_time.minutes);
-			fflush(stdout);
 
 			strcpy(flight_details.airline_name, airline);
 
+			aux_dist_1 = airports;
+			while((aux_dist_1 != NULL) && (strcmp(aux_dist_1->airport_details.city, flight_details.departure) != 0))
+			{
+				aux_dist_1 = aux_dist_1->next;
+			}
+			aux_dist_2 = airports;
+			while((aux_dist_2 != NULL) && (strcmp(aux_dist_2->airport_details.city, flight_details.arrival) != 0))
+			{
+				aux_dist_2 = aux_dist_2->next;
+			}
+			flight_details.dist_bet_airports = airport_distance((*aux_dist_1), (*aux_dist_2));
 
-			printf("Seeng if it reaches here!!!!!!\n");
+
 			aux_airports = airports;
 			while((aux_airports != NULL) && (strcmp(aux_airports->airport_details.city, flight_details.departure) != 0))
 			{
-				printf("%s\n", aux_airports->airport_details.city);
-				printf("______________________%s\n", flight_details.departure);
 				aux_airports = aux_airports->next;
 			}
-
-			printf("See if it reaches this point!!!!!!!!!!!!\n");
-			fflush(stdout);
-			printf("%p\n", (void*)aux_airports);
-			add_flight_to_airports(aux_airports->upcoming_flight, aux_airports->next_city, flight_details);
-			printf("Something!\n");
-			fflush(stdout);
+			aux_airports->next_city->next_flight = add_flight_to_airports(&aux_airports->upcoming_flight, &aux_airports->next_city, flight_details);
 
 			aux = fgets(line, LN, fp);
 		} while ((strcmp(line, "\n") != 0) && (aux != NULL));
